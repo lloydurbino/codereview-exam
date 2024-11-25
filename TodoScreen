@@ -1,0 +1,50 @@
+class TodoScreen extends StatefulWidget {
+  @override
+  _TodoScreenState createState() => _TodoScreenState();
+}
+
+class _TodoScreenState extends State<TodoScreen> {
+  List<String> todos = [];
+
+  final TextEditingController _controller = TextEditingController();
+
+  void _addTodo() {
+    todos.add(_controller.text);
+    _controller.clear();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text('Todo List')),
+      body: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: TextField(
+              controller: _controller,
+              decoration: InputDecoration(
+                border: OutlineInputBorder(),
+                labelText: 'Enter a task',
+              ),
+            ),
+          ),
+          ElevatedButton(
+            onPressed: _addTodo,
+            child: Text('Add Task'),
+          ),
+          Expanded(
+            child: ListView.builder(
+              itemCount: todos.length,
+              itemBuilder: (context, index) {
+                return ListTile(
+                  title: Text(todos[index]),
+                );
+              },
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
